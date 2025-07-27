@@ -166,13 +166,19 @@
 
         .message.user {
             background-color: #2d4a87;
-            margin-left: 2rem;
+            margin-left: auto;
+            margin-right: 0;
+            max-width: 70%;
             border: 1px solid #4a69bd;
             box-shadow: 0 2px 8px rgba(45, 74, 135, 0.15);
+            flex-direction: row-reverse;
         }
 
         .message.assistant {
             background-color: #2d5a27;
+            margin-left: 0;
+            margin-right: auto;
+            max-width: 70%;
             border: 1px solid #4a7c59;
             box-shadow: 0 2px 8px rgba(45, 90, 39, 0.15);
         }
@@ -559,7 +565,6 @@
             <div class="chat-messages" id="chatMessages">
                 <div class="welcome-message">
                     <h2>Welcome to DEAD AI</h2>
-                    <p>Ask me anything! I'm powered by Perplexity AI and ready to help you with questions, coding problems, research, and more.</p>
                 </div>
             </div>
 
@@ -719,7 +724,6 @@
                     chatMessages.innerHTML = `
                         <div class="welcome-message">
                             <h2>Welcome to DEAD AI</h2>
-                            <p>Ask me anything! I'm powered by Perplexity AI and ready to help you with questions, coding problems, research, and more.</p>
                         </div>
                     `;
                 }
