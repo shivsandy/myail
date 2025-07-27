@@ -521,7 +521,7 @@
     <!-- Sidebar -->
     <div class="sidebar" id="sidebar">
         <div class="sidebar-header">
-            <button class="new-chat-btn" onclick="clearChat()">
+            <button class="new-chat-btn" onclick="newChat()">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
                 </svg>
@@ -698,6 +698,34 @@
                 sendButton.disabled = false;
                 loading.style.display = 'none';
                 messageInput.focus();
+            }
+        }
+
+        async function newChat() {
+            try {
+                const response = await fetch('/api/clear', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        session_id: sessionId
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    const chatMessages = document.getElementById('chatMessages');
+                    chatMessages.innerHTML = `
+                        <div class="welcome-message">
+                            <h2>Welcome to DEAD AI</h2>
+                        </div>
+                    `;
+                    document.getElementById('messageInput').focus();
+                }
+            } catch (error) {
+                alert('Error starting new chat: ' + error.message);
             }
         }
 
