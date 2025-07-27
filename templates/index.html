@@ -165,14 +165,16 @@
         }
 
         .message.user {
-            background-color: #444654;
+            background-color: #2d4a87;
             margin-left: 2rem;
-            border: 1px solid #565869;
+            border: 1px solid #4a69bd;
+            box-shadow: 0 2px 8px rgba(45, 74, 135, 0.15);
         }
 
         .message.assistant {
-            background-color: #40414f;
-            border: 1px solid #565869;
+            background-color: #2d5a27;
+            border: 1px solid #4a7c59;
+            box-shadow: 0 2px 8px rgba(45, 90, 39, 0.15);
         }
 
         .message-avatar {
@@ -188,24 +190,42 @@
         }
 
         .message.user .message-avatar {
-            background-color: #5436da;
+            background-color: #4a69bd;
             color: white;
+            font-weight: 700;
         }
 
         .message.assistant .message-avatar {
-            background-color: #10a37f;
+            background-color: #16a085;
             color: white;
+            font-weight: 700;
         }
 
         .message-content {
             flex: 1;
             line-height: 1.7;
             font-size: 0.95rem;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+
+        /* Enhanced User Message Styling */
+        .message.user .message-content {
+            color: #e8f4fd;
+            font-weight: 500;
+            background-color: rgba(255, 255, 255, 0.05);
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+            border-left: 3px solid #4a69bd;
+        }
+
+        .message.assistant .message-content {
+            color: #f0f9ff;
         }
 
         /* Enhanced Typography for Better Readability */
         .message-content h1, .message-content h2, .message-content h3 {
-            color: #ececf1;
+            color: #ffffff;
             margin: 1.25rem 0 0.75rem 0;
             font-weight: 600;
         }
@@ -226,7 +246,13 @@
 
         .message-content p {
             margin: 0.75rem 0;
-            color: #d1d5db;
+            color: #e5e7eb;
+            line-height: 1.8;
+        }
+
+        .message.user .message-content p {
+            color: #ffffff;
+            margin: 0.5rem 0;
         }
 
         .message-content code {
@@ -594,9 +620,11 @@
             const messageContent = document.createElement('div');
             messageContent.className = 'message-content';
             
-            // Render markdown for assistant messages, plain text for user messages
+            // Render markdown for assistant messages, formatted text for user messages
             if (isUser) {
-                messageContent.textContent = content;
+                // For user messages, preserve line breaks and formatting
+                const formattedContent = content.replace(/\n/g, '<br>');
+                messageContent.innerHTML = formattedContent;
             } else {
                 // Configure marked options for better rendering
                 marked.setOptions({
