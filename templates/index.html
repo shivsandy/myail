@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Perplexity Chat</title>
+    <script src="https://cdn.jsdelivr.net/npm/marked@9.1.6/marked.min.js"></script>
     <style>
         * {
             margin: 0;
@@ -121,6 +122,73 @@
         .message-content {
             flex: 1;
             line-height: 1.7;
+        }
+
+        .message-content h1, .message-content h2, .message-content h3 {
+            color: #ececf1;
+            margin: 1rem 0 0.5rem 0;
+        }
+
+        .message-content h1 { font-size: 1.5rem; }
+        .message-content h2 { font-size: 1.3rem; }
+        .message-content h3 { font-size: 1.1rem; }
+
+        .message-content p {
+            margin: 0.5rem 0;
+        }
+
+        .message-content code {
+            background-color: #1e1e1e;
+            color: #e6db74;
+            padding: 0.2rem 0.4rem;
+            border-radius: 0.25rem;
+            font-family: 'Courier New', monospace;
+        }
+
+        .message-content pre {
+            background-color: #1e1e1e;
+            color: #f8f8f2;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            overflow-x: auto;
+            margin: 1rem 0;
+            border: 1px solid #444;
+        }
+
+        .message-content pre code {
+            background: none;
+            padding: 0;
+            color: inherit;
+        }
+
+        .message-content ul, .message-content ol {
+            margin: 0.5rem 0;
+            padding-left: 1.5rem;
+        }
+
+        .message-content li {
+            margin: 0.25rem 0;
+        }
+
+        .message-content blockquote {
+            border-left: 4px solid #10a37f;
+            padding-left: 1rem;
+            margin: 1rem 0;
+            color: #b4b4b4;
+        }
+
+        .message-content strong {
+            color: #ececf1;
+            font-weight: 600;
+        }
+
+        .message-content a {
+            color: #10a37f;
+            text-decoration: none;
+        }
+
+        .message-content a:hover {
+            text-decoration: underline;
         }
 
         .input-container {
@@ -303,7 +371,20 @@
             
             const messageContent = document.createElement('div');
             messageContent.className = 'message-content';
-            messageContent.textContent = content;
+            
+            // Render markdown for assistant messages, plain text for user messages
+            if (isUser) {
+                messageContent.textContent = content;
+            } else {
+                // Configure marked options for better rendering
+                marked.setOptions({
+                    breaks: true,
+                    gfm: true,
+                    headerIds: false,
+                    mangle: false
+                });
+                messageContent.innerHTML = marked.parse(content);
+            }
             
             messageDiv.appendChild(avatar);
             messageDiv.appendChild(messageContent);
