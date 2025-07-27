@@ -14,6 +14,9 @@ requiredFiles = [".replit", "replit.nix"]
 run = ["python3", "main.py"]
 deploymentTarget = "cloudrun"
 
+[run]
+onBoot = "python3 -m ensurepip --upgrade"
+
 [workflows]
 
 [[workflows.workflow]]
